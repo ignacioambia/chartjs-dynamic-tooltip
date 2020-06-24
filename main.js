@@ -28,6 +28,7 @@ window.onload = function(){
                     if(!tooltipEl){
                         tooltipEl =  document.createElement('div')
                         tooltipEl.id = 'custom-tooltip'
+                        tooltipEl.innerHTML = '<table></table>'
 
                         document.body.appendChild(tooltipEl)
                     }
@@ -36,6 +37,23 @@ window.onload = function(){
                     if(tooltipModel.opacity === 0){
                         tooltipEl.style.opacity = 0;
                         return;
+                    }
+
+                    tooltipEl.classList.remove('above','below','no-transform')
+
+                    if(tooltipModel.yAlign){
+                        tooltipEl.classList.add(tooltipModel.yAlign)
+                    }else{
+                        tooltipEl.classList.add('no-tranform')
+                    }
+
+
+                    function getBody(bodyItem){
+                        return bodyItem.lines
+                    }
+
+                    if(tooltipModel.body){
+                        
                     }
                 }
             }
