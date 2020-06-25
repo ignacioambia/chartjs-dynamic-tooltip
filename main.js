@@ -22,8 +22,6 @@ window.onload = function(){
                 enabled : false,
                 custom : function(tooltipModel){
                     var tooltipEl = document.getElementById('custom-tooltip')
-
-                    console.log(tooltipEl)
                    
                     if(!tooltipEl){
                         tooltipEl =  document.createElement('div')
@@ -53,8 +51,52 @@ window.onload = function(){
                     }
 
                     if(tooltipModel.body){
-                        
+                        var titleLines = tooltipModel.title || []
+                        var bodyLines = tooltipModel.body.map(getBody)
+
+                        var innerHTML = '<thead>'
+
+                        titleLines.forEach(function(title){
+                            innerHTML +=  '<tr><th>' +  title + '</th></tr>'
+                        })
+
+                        innerHTML += '</thead><tdboy>'
+
+                        bodyLines.forEach(function(body,i){
+                            var colors = tooltipModel.labelColors[i]
+                            var style = `
+                                background : ${colors.backgroundColor};
+                                border-color : ${colors.borderColor};
+                                border-width : 2px;
+                            `
+
+                            var span = '<span style="'+style+'"></span>'
+                            innerHTML += '<tr><td>' + span + body + '</td></tr>'
+
+                        })
+
+                        innerHTML += '</tbody>'
+
+                        var tableRoot = tooltipEl.querySelector('table')
+                        tableRoot.innerHTML = innerHTML
+
                     }
+
+                    var position = this._chart.canvas.getBoundingClientRect()
+
+                    tooltipEl.style.opacity = 1
+                    tooltipEl.style.position = 'absolute'
+                    tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px'
+                    tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px'
+                    tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily
+                    tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px'
+                    tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle
+                    tooltipEl.style.padding = tooltipModel.yPadding + 'px' + tooltipModel.xPadding + 'px'
+                    tooltipEl.style.pointerEvents = 'none'
+
+                    tooltipEl.style.backgroundColor = 'black'
+                    tooltipEl.style.color = 'white'
+
                 }
             }
         }
