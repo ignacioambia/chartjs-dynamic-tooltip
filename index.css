@@ -1,0 +1,19 @@
+.custom-tooltip{
+    background-color: black;
+    color : white;
+    position: absolute;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-size: 12px;
+    padding: 6px 6px;
+    font-style: normal;
+    
+
+}
+
+.d-flex{
+    display: flex;
+}
+
+.font-weight-bold{
+    font-weight: bold;
+}
