@@ -1,8 +1,19 @@
 //https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
 var hola
 var myLineChart
+
+
+
+function callUser(name){
+    console.log('Calling user ' + name)
+}
+
+
+
+
 window.onload = function(){
     hola = 'hola a todos'
+
     // var cta = document.getElementById('chart').getContext('2d')
     // var chart = new Chart(cta,{
     //     type : 'line',
@@ -105,40 +116,37 @@ window.onload = function(){
 
     var ctx = document.getElementById("canvas").getContext("2d");
 
-		var data = {
-      labels: ["0","1","2"],
-      keepShowing: [],
-		  datasets: [{
-		    label: "set1",
-		    data: [{
-          x: 0,
-          y: 50
-          },{
-					x: 3,
-          y: 15
-          },{
-          x: 2,
-          y: 45
-          }
-		    ],
-		    backgroundColor: "rgba(26,179,148,0.6)", //green
+        var data = 
+        {
+        labels: ["0","1","2"],
+        keepShowing: [],
+        datasets: 
+        [
+            {
+                label: "set1",
+                data: 
+                [
+                    {
+                        x: 0,
+                        y: 50,
+                        user : 'Jorge Rangel'
+                    },
+                    {
+                        x: 3,
+                        y: 25,
+                        user : 'Susana Torres'
+                    },
+                    {
+                        x: 2,
+                        y: 45,
+                        user : 'Ignacio Ambia'
+                    }
+                ],
+                backgroundColor: "rgba(26,179,148,0.6)", //green
 
-		  }, {
-		    label: "set2",
-		     data: [{
-          x: 0,
-          y: 10
-          },{
-					x: 1,
-          y: 50
-          },{
-          x: 2,
-          y: 45
-          }
-		    ],
-		    backgroundColor: "rgba(255,100,100,0.6)", //red
-
-		  }],
+            },
+           
+        ],
 		};
 
 		var options = {
@@ -157,8 +165,10 @@ window.onload = function(){
 		    }]
 		  },
       tooltips: {
-          enabled: true,
+          enabled: false,
           custom : function(tooltipModel){
+
+
             let customTooltip = document.getElementById('custom-tooltip')
 
 
@@ -172,15 +182,23 @@ window.onload = function(){
             }
 
             if(tooltipModel.opacity == 0){
-                customTooltip.style.opacity = 0
+                customTooltip.style.opacity = 1
                 return;
             }
 
             let values  = ''
 
+            let mybutton = document.createElement('button')
+            mybutton.innerHTML = 'New button'
+            mybutton.onclick = ()=>{
+                callUser(myLineChart.data.datasets[0].data[tooltipModel.dataPoints[0].index].user)
+            }
+
             tooltipModel.body.forEach(obj=>{
                 values += '<div>' +obj.lines[0]+ '</div>'
             })
+
+            console.log(tooltipModel)
 
             customTooltip.innerHTML = `
                 <div>
@@ -191,23 +209,32 @@ window.onload = function(){
                     <div>
                     `+values+`
                     </div>
+
+                    <div style="text-align:center;" >
+                        
+                    </div>
                 </div>
             `
+
+            customTooltip.append(mybutton)
+
             console.log(tooltipModel)
 
-
+            var position = this._chart.canvas.getBoundingClientRect()
 
             customTooltip.style.opacity = 1
+            customTooltip.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px'
+            customTooltip.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px'
           },
           mode: 'label',
-          callbacks: {
-              label: function(tooltipItems, data) {
-                  if(tooltipItems.datasetIndex == 0)
-                       return "Marge globale" +': ' + tooltipItems.yLabel;
-                   else
-                       return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel;
-                        }
-                    }
+        //   callbacks: {
+        //       label: function(tooltipItems, data) {
+        //           if(tooltipItems.datasetIndex == 0)
+        //                return "Marge globale" +': ' + tooltipItems.yLabel;
+        //            else
+        //                return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel;
+        //                 }
+        //             }
                 },
            onClick: handleClick,
 
@@ -216,46 +243,46 @@ window.onload = function(){
 
 		};
 
-		var keepTooltipOpenPlugin = {
+	// 	var keepTooltipOpenPlugin = {
 
-		  beforeRender: function(chart) {
+	// 	  beforeRender: function(chart) {
             
-      	// We are looking for bubble which owns "keepTooltipOpen" parameter.
-            var datasets = chart.data.datasets;
-		    chart.pluginTooltips = [];
-        var abscissaToShow = chart.data.keepShowing;
-        abscissaToShow.forEach(function(element) {
-          var activeArray = [];
-          for (i = 0; i < datasets.length; i++) {
-          	if(!chart.getDatasetMeta(i).hidden)
-		      		activeArray.push(chart.getDatasetMeta(i).data[element])
-          }
-          chart.pluginTooltips.push(new Chart.Tooltip({
-		            _chart: chart.chart,
-		            _chartInstance: chart,
-		            _data: chart.data,
-		            _options: chart.options.tooltips,
-		            _active: activeArray
-		          }, chart));
-        });
-        console.log(chart.pluginTooltips)
-		  }, // end beforeRender
+    //   	// We are looking for bubble which owns "keepTooltipOpen" parameter.
+    //         var datasets = chart.data.datasets;
+	// 	    chart.pluginTooltips = [];
+    //     var abscissaToShow = chart.data.keepShowing;
+    //     abscissaToShow.forEach(function(element) {
+    //       var activeArray = [];
+    //       for (i = 0; i < datasets.length; i++) {
+    //       	if(!chart.getDatasetMeta(i).hidden)
+	// 	      		activeArray.push(chart.getDatasetMeta(i).data[element])
+    //       }
+    //       chart.pluginTooltips.push(new Chart.Tooltip({
+	// 	            _chart: chart.chart,
+	// 	            _chartInstance: chart,
+	// 	            _data: chart.data,
+	// 	            _options: chart.options.tooltips,
+	// 	            _active: activeArray
+	// 	          }, chart));
+    //     });
+    //     console.log(chart.pluginTooltips)
+	// 	  }, // end beforeRender
       
-		  afterDatasetsDraw: function(chart, easing) {
+	// 	  afterDatasetsDraw: function(chart, easing) {
 
-		      // Draw tooltips
-		      Chart.helpers.each(chart.pluginTooltips, function(tooltip) {
-		        tooltip.initialize();
-		        tooltip.update();
-		        tooltip.pivot();
-		        tooltip.transition(easing).draw();
-		      });
+	// 	      // Draw tooltips
+	// 	      Chart.helpers.each(chart.pluginTooltips, function(tooltip) {
+	// 	        tooltip.initialize();
+	// 	        tooltip.update();
+	// 	        tooltip.pivot();
+	// 	        tooltip.transition(easing).draw();
+	// 	      });
 
 
-		    } // end afterDatasetsDraw
-		}
+	// 	    } // end afterDatasetsDraw
+	// 	}
 
-	Chart.pluginService.register(keepTooltipOpenPlugin);
+	// Chart.pluginService.register(keepTooltipOpenPlugin);
     
     myLineChart = new Chart(ctx, {
     type: 'line',
