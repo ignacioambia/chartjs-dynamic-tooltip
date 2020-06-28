@@ -1,3 +1,5 @@
+
+
 //https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
 var hola
 var myLineChart
@@ -183,7 +185,7 @@ window.onload = function(){
                 var cursorOnDiv = false;
 
                 if(tooltipModel.opacity == 0 ){
-                  customTooltip.style.opacity = 1
+                  customTooltip.style.opacity = 0
                   return;
                 }
 
