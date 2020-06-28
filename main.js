@@ -177,14 +177,31 @@ window.onload = function(){
                 customTooltip.id = 'custom-tooltip'
                 customTooltip.classList.add('custom-tooltip')
 
-                console.log(customTooltip)
                 document.body.appendChild(customTooltip)
             }
 
-            if(tooltipModel.opacity == 0){
-                customTooltip.style.opacity = 1
-                return;
-            }
+                var cursorOnDiv = false;
+
+                if(tooltipModel.opacity == 0 ){
+                  customTooltip.style.opacity = 1
+                  return;
+                }
+
+
+                customTooltip.addEventListener('mouseout',()=>{
+                  customTooltip.style.opacity = 0
+                })
+
+                customTooltip.addEventListener('mouseover',()=>{
+
+                  customTooltip.style.opacity = 1
+                })
+
+
+            // setTimeout(function(){
+
+            // },300)
+           
 
             let values  = ''
 
@@ -198,7 +215,7 @@ window.onload = function(){
                 values += '<div>' +obj.lines[0]+ '</div>'
             })
 
-            console.log(tooltipModel)
+            // console.log(tooltipModel)
 
             customTooltip.innerHTML = `
                 <div>
@@ -218,7 +235,6 @@ window.onload = function(){
 
             customTooltip.append(mybutton)
 
-            console.log(tooltipModel)
 
             var position = this._chart.canvas.getBoundingClientRect()
 
