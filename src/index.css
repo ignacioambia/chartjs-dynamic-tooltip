@@ -1,12 +1,15 @@
 .custom-tooltip{
-    background-color: black;
-    opacity: ;
+    background-color: rgb(24, 24, 24);
     color : white;
     position: absolute;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 12px;
     padding: 6px 6px;
     font-style: normal;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    transition : .2s;
     
 
 }
@@ -16,6 +19,45 @@
     
 }
 
+.justify-content-between{
+    justify-content: space-between;
+}
+
 .font-weight-bold{
     font-weight: bold;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.custom-hr{
+    background-color : gray;
+    margin-top : 0px;
+}
+
+.mb-2{
+    margin-bottom: .5em;
+}
+
+.mr-2{
+    padding-right:2em;
+}
+
+.bar{
+    background-color: gray;
+    border-radius: 5px;
+    color: white;
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-end;
+    min-height: 12px;
+}
+
+.bar-content-green{
+    background-color: green;
+    width : 15%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-end;
 }

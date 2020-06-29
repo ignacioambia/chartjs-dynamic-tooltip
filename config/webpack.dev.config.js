@@ -9,6 +9,12 @@ module.exports = {
     },
     mode : 'development',
 
+    devServer : {
+        contentBase : './dist',
+        hot : true,
+        port : 9000
+    },
+
     module : {
         rules : [
             {

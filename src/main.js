@@ -1,131 +1,28 @@
-
-
 //https://www.chartjs.org/docs/latest/configuration/tooltip.html#external-custom-tooltips
-var hola
+
+import Chart from 'chart.js'
+import './index.css'
+
 var myLineChart
 
-
+const tooltipOpacity = 1
 
 function callUser(name){
     console.log('Calling user ' + name)
 }
 
-
-
-
 window.onload = function(){
-    hola = 'hola a todos'
-
-    // var cta = document.getElementById('chart').getContext('2d')
-    // var chart = new Chart(cta,{
-    //     type : 'line',
-    //     data : {
-    //         labels : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //         datasets : [
-    //             {
-    //                 label : 'My first dataset',
-    //                 data : [0, 10, 5, 2, 20, 30, 45]
-    //             }
-                
-    //         ]
-            
-    //     },
-
-    //     options : {
-    //         tooltips: {
-    //             enabled : false,
-    //             custom : function(tooltipModel){
-    //                 var tooltipEl = document.getElementById('custom-tooltip')
-                   
-    //                 if(!tooltipEl){
-    //                     tooltipEl =  document.createElement('div')
-    //                     tooltipEl.id = 'custom-tooltip'
-                        
-    //                     tooltipEl.innerHTML = '<table></table>'
-
-    //                     document.body.appendChild(tooltipEl)
-    //                 }
-
-
-    //                 if(tooltipModel.opacity === 0){
-    //                     tooltipEl.style.opacity = 0;
-    //                     return;
-    //                 }
-
-    //                 tooltipEl.classList.remove('above','below','no-transform',)
-
-    //                 if(tooltipModel.yAlign){
-    //                     tooltipEl.classList.add(tooltipModel.yAlign)
-    //                 }else{
-    //                     tooltipEl.classList.add('no-tranform')
-    //                 }
-
-
-    //                 function getBody(bodyItem){
-    //                     return bodyItem.lines
-    //                 }
-
-    //                 if(tooltipModel.body){
-    //                     var titleLines = tooltipModel.title || []
-    //                     var bodyLines = tooltipModel.body.map(getBody)
-
-    //                     var innerHTML = '<thead>'
-
-    //                     titleLines.forEach(function(title){
-    //                         innerHTML +=  '<tr><th>' +  title + '</th></tr>'
-    //                     })
-
-    //                     innerHTML += '</thead><tdboy>'
-
-    //                     bodyLines.forEach(function(body,i){
-    //                         var colors = tooltipModel.labelColors[i]
-    //                         var style = `
-    //                             background : ${colors.backgroundColor};
-    //                             border-color : ${colors.borderColor};
-    //                             border-width : 2px;
-    //                         `
-
-    //                         var span = '<span style="'+style+'"></span>'
-    //                         innerHTML += '<tr><td>' + span + body + '</td></tr>'
-
-    //                     })
-
-    //                     innerHTML += '</tbody>'
-
-    //                     innerHTML += '<button>button inside tooltip</button>'
-
-    //                     var tableRoot = tooltipEl.querySelector('table')
-    //                     tableRoot.innerHTML = innerHTML
-
-    //                 }
-
-    //                 var position = this._chart.canvas.getBoundingClientRect()
-
-    //                 tooltipEl.classList.add('custom-tooltip')
-
-    //                 tooltipEl.style.opacity = 1
-    //                 tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px'
-    //                 tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px'
-    //                 // tooltipEl.style.pointerEvents = 'none'
-
-
-
-    //             }
-    //         }
-    //     }
-    
-    // })
 
     var ctx = document.getElementById("canvas").getContext("2d");
 
         var data = 
         {
-        labels: ["0","1","2"],
+        labels: ["January","Februrary","March","April","May","June"],
         keepShowing: [],
         datasets: 
         [
             {
-                label: "set1",
+                label: "Autorating",
                 data: 
                 [
                     {
@@ -142,7 +39,22 @@ window.onload = function(){
                         x: 2,
                         y: 45,
                         user : 'Ignacio Ambia'
-                    }
+                    },
+                    {
+                      x: 0,
+                      y: 50,
+                      user : 'Jorge Rangel'
+                  },
+                  {
+                      x: 3,
+                      y: 25,
+                      user : 'Susana Torres'
+                  },
+                  {
+                      x: 2,
+                      y: 45,
+                      user : 'Ignacio Ambia'
+                  }
                 ],
                 backgroundColor: "rgba(26,179,148,0.6)", //green
 
@@ -171,6 +83,7 @@ window.onload = function(){
           custom : function(tooltipModel){
 
 
+
             let customTooltip = document.getElementById('custom-tooltip')
 
 
@@ -196,37 +109,35 @@ window.onload = function(){
 
                 customTooltip.addEventListener('mouseover',()=>{
 
-                  customTooltip.style.opacity = 1
+                  customTooltip.style.opacity = tooltipOpacity
                 })
-
-
-            // setTimeout(function(){
-
-            // },300)
            
 
             let values  = ''
 
-            let mybutton = document.createElement('button')
-            mybutton.innerHTML = 'New button'
-            mybutton.onclick = ()=>{
-                callUser(myLineChart.data.datasets[0].data[tooltipModel.dataPoints[0].index].user)
-            }
+
 
             tooltipModel.body.forEach(obj=>{
                 values += '<div>' +obj.lines[0]+ '</div>'
             })
 
-            // console.log(tooltipModel)
 
             customTooltip.innerHTML = `
                 <div>
-                    <div>
-                        <span class="font-weight-bold">${tooltipModel.title}</span>
+                    <div class="text-center mb-2">
+                        <span class="font-weight-bold" >${tooltipModel.title}</span>
                     </div>
 
                     <div>
-                    `+values+`
+                    <div class="bar">
+                    <span style="justify-content: start; width: 50%;">Ignacio Ambia</span>
+                    
+                    <div class="bar-content-green">
+                        <div>
+                            75%
+                        </div>
+                    </div>
+                </div>
                     </div>
 
                     <div style="text-align:center;" >
@@ -235,24 +146,33 @@ window.onload = function(){
                 </div>
             `
 
-            customTooltip.append(mybutton)
+            var chartPosition = this._chart.canvas.getBoundingClientRect()
+            var tooltipPosition = customTooltip.getBoundingClientRect()
+           
 
 
-            var position = this._chart.canvas.getBoundingClientRect()
 
+
+            
             customTooltip.style.opacity = 1
-            customTooltip.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px'
-            customTooltip.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px'
+            customTooltip.style.top = chartPosition.top + window.pageYOffset + tooltipModel.caretY + 'px'
+            
+            var tooltipPosition = customTooltip.getBoundingClientRect()
+            if(window.innerWidth < chartPosition.left + window.pageXOffset + tooltipModel.caretX  + tooltipPosition.width){
+              customTooltip.style.left = chartPosition.left + window.pageXOffset + tooltipModel.caretX - tooltipPosition.width -10 + 'px'
+            }else{
+              customTooltip.style.left = chartPosition.left + window.pageXOffset + tooltipModel.caretX + 'px'
+            }
           },
           mode: 'label',
-        //   callbacks: {
-        //       label: function(tooltipItems, data) {
-        //           if(tooltipItems.datasetIndex == 0)
-        //                return "Marge globale" +': ' + tooltipItems.yLabel;
-        //            else
-        //                return data.datasets[tooltipItems.datasetIndex].label +': ' + tooltipItems.yLabel;
-        //                 }
-        //             }
+
+          callbacks : {
+            title : function(tooltipItem,data){
+             
+              return tooltipItem[0].label +  ' autorating'
+            }
+          }
+
                 },
            onClick: handleClick,
 
